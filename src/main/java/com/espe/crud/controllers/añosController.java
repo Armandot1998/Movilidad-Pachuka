@@ -25,7 +25,6 @@ import com.espe.crud.vo.SolicitudMovilidadVo;
 import com.espe.crud.vo.convenioVo;
 import com.espe.crud.vo.verificacionvo;
 
-
 @CrossOrigin(origins = "*")
 @RestController 
 public class añosController {
@@ -44,16 +43,16 @@ public class añosController {
 	
 	@GetMapping("/pmov")
 	public List<PMovilidad> findPM() throws SQLException{
-		String q = "SELECT MOVILIDAD.uzmtplanmov.uzmtplanmov_id, MOVILIDAD.uzmtplanmov.uzmtplanmov_nombre, MOVILIDAD.uzmttipmov.uzmtipmov_nombre  FROM MOVILIDAD.uzmtplanmov INNER JOIN \r\n" + 
-				"MOVILIDAD.UZMTTIPMOV on MOVILIDAD.uzmtplanmov.UZMTIPMOV_ID= MOVILIDAD.UZMTTIPMOV.UZMTIPMOV_ID\r\n" + 
+		String q = "SELECT uzmtplanmov.uzmtplanmov_id, uzmtplanmov.uzmtplanmov_nombre, uzmttipmov.uzmtipmov_nombre  FROM uzmtplanmov INNER JOIN \r\n" + 
+				"MOVILIDAD.UZMTTIPMOV on uzmtplanmov.UZMTIPMOV_ID= UZMTTIPMOV.UZMTIPMOV_ID\r\n" + 
 				"ORDER BY UZMTPLANMOV_ID ";
 	System.out.println(q);
 		return jdbcTemplate.query(q, new BeanPropertyRowMapper<>(PMovilidad.class));
 	}
 	@GetMapping("/smovfind")
 	public List<SMovilidad> findS() throws SQLException{
-		String q = "SELECT MOVILIDAD.uzmtmovsubm.uzmtmovsubm_id, MOVILIDAD.uzmtmovsubm.uzmtmovsubm_nom, MOVILIDAD.uzmttipmov.uzmtipmov_nombre  FROM MOVILIDAD.uzmtmovsubm INNER JOIN \r\n" + 
-				"MOVILIDAD.UZMTTIPMOV on MOVILIDAD.uzmtmovsubm.UZMTIPMOV_ID= MOVILIDAD.UZMTTIPMOV.UZMTIPMOV_ID\r\n" + 
+		String q = "SELECT uzmtmovsubm.uzmtmovsubm_id, uzmtmovsubm.uzmtmovsubm_nom, uzmttipmov.uzmtipmov_nombre  FROM uzmtmovsubm INNER JOIN \r\n" + 
+				"MOVILIDAD.UZMTTIPMOV on uzmtmovsubm.UZMTIPMOV_ID= UZMTTIPMOV.UZMTIPMOV_ID\r\n" + 
 				"ORDER BY UZMTMOVSUBM_ID";
 	System.out.println(q);
 		return jdbcTemplate.query(q, new BeanPropertyRowMapper<>(SMovilidad.class));
@@ -61,8 +60,8 @@ public class añosController {
 	
 	@GetMapping("/conven")
 	public List<convenioVo> findC() throws SQLException{
-		String q = "SELECT MOVILIDAD.uzmtconvenio.uzmtconvenio_id, MOVILIDAD.uzmttipconve.uzmttipconve_nom, MOVILIDAD.uzmtconvenio.uzmtconvenio_fech_ini, MOVILIDAD.uzmtconvenio.uzmtconvenio_fech_fin, MOVILIDAD.uzmtconvenio.uzmtconvenio_estado, MOVILIDAD.uzmtconvenio.stusbgi_code\r\n" + 
-				"FROM MOVILIDAD.UZMTCONVENIO INNER JOIN MOVILIDAD.UZMTTIPCONVE on MOVILIDAD.UZMTCONVENIO.UZMTCONVENIO_ID = MOVILIDAD.UZMTTIPCONVE.UZMTTIPCONVE_ID \r\n" + 
+		String q = "SELECT uzmtconvenio.uzmtconvenio_id, uzmttipconve.uzmttipconve_nom, uzmtconvenio.uzmtconvenio_fech_ini, uzmtconvenio.uzmtconvenio_fech_fin, uzmtconvenio.uzmtconvenio_estado, uzmtconvenio.stusbgi_code\r\n" + 
+				"FROM UZMTCONVENIO INNER JOIN UZMTTIPCONVE on UZMTCONVENIO.UZMTCONVENIO_ID = UZMTTIPCONVE.UZMTTIPCONVE_ID \r\n" + 
 				"ORDER BY UZMTCONVENIO_ID";
 	System.out.println(q);
 		return jdbcTemplate.query(q, new BeanPropertyRowMapper<>(convenioVo.class));
@@ -70,8 +69,8 @@ public class añosController {
 	
 	@GetMapping("/smov")
 	public List<SMovilidad> findSM() throws SQLException{
-		String q = "SELECT MOVILIDAD.uzmtmovsubm.uzmtmovsubm_id, MOVILIDAD.uzmtmovsubm.uzmtmovsubm_nom, MOVILIDAD.uzmttipmov.uzmtipmov_nombre  FROM MOVILIDAD.uzmtmovsubm INNER JOIN \r\n" + 
-				"MOVILIDAD.UZMTTIPMOV on MOVILIDAD.uzmtmovsubm.UZMTIPMOV_ID= MOVILIDAD.UZMTTIPMOV.UZMTIPMOV_ID\r\n" + 
+		String q = "SELECT uzmtmovsubm.uzmtmovsubm_id, uzmtmovsubm.uzmtmovsubm_nom, uzmttipmov.uzmtipmov_nombre  FROM uzmtmovsubm INNER JOIN \r\n" + 
+				"MOVILIDAD.UZMTTIPMOV on uzmtmovsubm.UZMTIPMOV_ID= UZMTTIPMOV.UZMTIPMOV_ID\r\n" + 
 				"ORDER BY UZMTMOVSUBM_ID ";
 	System.out.println(q);
 		return jdbcTemplate.query(q, new BeanPropertyRowMapper<>(SMovilidad.class));
@@ -100,14 +99,14 @@ public class añosController {
 	
 	@GetMapping("/nuevo/{id}")
 	public List<verificacionvo> find(@PathVariable Long id) throws SQLException{
-		String q = "select  DISTINCT(uzmtrequisito_detalle) as nombre, uzmtverireq_estado, uzmtverireq_id from MOVILIDAD.uzmtverireq, MOVILIDAD.uzmtrequisito, MOVILIDAD.uzmtreqplanm where MOVILIDAD.uzmtverireq.uzmtreqplanm_id= MOVILIDAD.uzmtreqplanm.uzmtreqplanm_id and MOVILIDAD.uzmtrequisito.uzmtrequisito_id= MOVILIDAD.uzmtreqplanm.uzmtrequisito_id and peaempl_pidm="+id+" order by uzmtverireq_id";
+		String q = "select  DISTINCT(uzmtrequisito_detalle) as nombre, uzmtverireq_estado, uzmtverireq_id from uzmtverireq, uzmtrequisito, uzmtreqplanm where uzmtverireq.uzmtreqplanm_id= uzmtreqplanm.uzmtreqplanm_id and uzmtrequisito.uzmtrequisito_id= uzmtreqplanm.uzmtrequisito_id and peaempl_pidm="+id+" order by uzmtverireq_id";
 	System.out.println(q);
 		return jdbcTemplate.query(q, new BeanPropertyRowMapper<>(verificacionvo.class));
 	}
 	
 	@GetMapping("/nuevo2/{id}")
 	public List<verificacionvo> find2(@PathVariable Long id) throws SQLException{
-		String q = "select  DISTINCT(uzmtrequisito_detalle) as nombre, uzmtverireq_estado, uzmtverireq_id from MOVILIDAD.uzmtverireq, MOVILIDAD.uzmtrequisito, MOVILIDAD.uzmtreqmovsubm where MOVILIDAD.uzmtverireq.uzmtreqmovsubm_id= MOVILIDAD.uzmtreqmovsubm.uzmtreqmovsubm_id and MOVILIDAD.uzmtrequisito.uzmtrequisito_id= MOVILIDAD.uzmtreqmovsubm.uzmtrequisito_id and peaempl_pidm="+id+" order by uzmtverireq_id";
+		String q = "select  DISTINCT(uzmtrequisito_detalle) as nombre, uzmtverireq_estado, uzmtverireq_id from uzmtverireq, uzmtrequisito, uzmtreqmovsubm where uzmtverireq.uzmtreqmovsubm_id= uzmtreqmovsubm.uzmtreqmovsubm_id and uzmtrequisito.uzmtrequisito_id= uzmtreqmovsubm.uzmtrequisito_id and peaempl_pidm="+id+" order by uzmtverireq_id";
 	System.out.println(q);
 		return jdbcTemplate.query(q, new BeanPropertyRowMapper<>(verificacionvo.class));
 	}
@@ -115,7 +114,7 @@ public class añosController {
 	
 	@GetMapping("/plan")
 	public List<tipomovilidad> plan() throws SQLException{
-		String q = "SELECT DISTINCT(UZMTIPMOV_NOMBRE) AS movilidad FROM MOVILIDAD.UZMTCONVO, MOVILIDAD.UZMTTIPMOV WHERE UZMTTIPMOV.UZMTCONVO_ID= UZMTCONVO.UZMTCONVO_ID and UZMTCONVO_ESTADO='1' ORDER BY UZMTIPMOV_NOMBRE\r\n" + 
+		String q = "SELECT DISTINCT(UZMTIPMOV_NOMBRE) AS movilidad FROM UZMTCONVO, UZMTTIPMOV WHERE UZMTTIPMOV.UZMTCONVO_ID= UZMTCONVO.UZMTCONVO_ID and UZMTCONVO_ESTADO='1' ORDER BY UZMTIPMOV_NOMBRE\r\n" + 
 				"";
 	System.out.println(q);
 		return jdbcTemplate.query(q, new BeanPropertyRowMapper<>(tipomovilidad.class));
@@ -123,14 +122,14 @@ public class añosController {
 	
 	@GetMapping("/planmovilidad")
 	public List<PlanMovilidadVo> planmovilidad() throws SQLException{
-		String q = "SELECT DISTINCT(UZMTPLANMOV_NOMBRE) AS planmovilidad FROM MOVILIDAD.UZMTCONVO, MOVILIDAD.UZMTPLANMOV, MOVILIDAD.UZMTTIPMOV WHERE UZMTPLANMOV.UZMTIPMOV_ID= UZMTTIPMOV.UZMTIPMOV_ID and UZMTTIPMOV.UZMTCONVO_ID= UZMTCONVO.UZMTCONVO_ID and UZMTCONVO_ESTADO='1' ORDER BY UZMTPLANMOV_NOMBRE";
+		String q = "SELECT DISTINCT(UZMTPLANMOV_NOMBRE) AS planmovilidad FROM UZMTCONVO, UZMTPLANMOV, UZMTTIPMOV WHERE UZMTPLANMOV.UZMTIPMOV_ID= UZMTTIPMOV.UZMTIPMOV_ID and UZMTTIPMOV.UZMTCONVO_ID= UZMTCONVO.UZMTCONVO_ID and UZMTCONVO_ESTADO='1' ORDER BY UZMTPLANMOV_NOMBRE";
 	System.out.println(q);
 		return jdbcTemplate.query(q, new BeanPropertyRowMapper<>(PlanMovilidadVo.class));
 	}
 	
 	@GetMapping("/indexadasmovilidad")
 	public List<SolicitudMovilidadVo> indexadassolicitud() throws SQLException{
-		String q = "SELECT DISTINCT(UZMTMOVSUBM_NOM) AS solicitudmovilidad FROM MOVILIDAD.UZMTCONVO, MOVILIDAD.UZMTMOVSUBM, MOVILIDAD.UZMTTIPMOV WHERE UZMTMOVSUBM.UZMTIPMOV_ID= UZMTTIPMOV.UZMTIPMOV_ID and UZMTTIPMOV.UZMTCONVO_ID= UZMTCONVO.UZMTCONVO_ID and UZMTCONVO_ESTADO='1' ORDER BY UZMTMOVSUBM_NOM";
+		String q = "SELECT DISTINCT(UZMTMOVSUBM_NOM) AS solicitudmovilidad FROM UZMTCONVO, UZMTMOVSUBM, UZMTTIPMOV WHERE UZMTMOVSUBM.UZMTIPMOV_ID= UZMTTIPMOV.UZMTIPMOV_ID and UZMTTIPMOV.UZMTCONVO_ID= UZMTCONVO.UZMTCONVO_ID and UZMTCONVO_ESTADO='1' ORDER BY UZMTMOVSUBM_NOM";
 	System.out.println(q);
 		return jdbcTemplate.query(q, new BeanPropertyRowMapper<>(SolicitudMovilidadVo.class));
 	}
@@ -139,7 +138,7 @@ public class añosController {
 	public List<ReqplanmVo> requisito(@PathVariable Long id) throws SQLException{
 		String q = "insert\r\n" + 
 				"WHEN (SELECT TRUNC((( SYSDATE - PEBEMPL_FIRST_HIRE_DATE )/365),0) AS TOTAL FROM PEBEMPL WHERE PEBEMPL_PIDM = "+ id +" AND PEBEMPL_BCAT_CODE = 'DO') >3 THEN\r\n" + 
-				"into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM)VALUES (2,3," + id + ")\r\n" + 
+				"into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM)VALUES (2,3," + id + ")\r\n" + 
 				"WHEN ((SELECT DISTINCT\r\n" + 
 				"(select max(ptrtenr_desc)  from PTRTENR where ptrtenr_code= PERAPPT_TENURE_CODE ) as CATEGORIA_ESCALAFON\r\n" + 
 				"FROM PEBEMPL r, PERAPPT\r\n" + 
@@ -155,7 +154,7 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR AUXILIAR 1'))  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
+				" into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
 				" WHEN ((SELECT DISTINCT\r\n" + 
 				"(select max(ptrtenr_desc)  from PTRTENR where ptrtenr_code= PERAPPT_TENURE_CODE ) as CATEGORIA_ESCALAFON\r\n" + 
 				"FROM PEBEMPL r, PERAPPT\r\n" + 
@@ -171,7 +170,7 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR PRINCIPAL 1'))  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
+				" into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
 				" WHEN ((SELECT DISTINCT\r\n" + 
 				"(select max(ptrtenr_desc)  from PTRTENR where ptrtenr_code= PERAPPT_TENURE_CODE ) as CATEGORIA_ESCALAFON\r\n" + 
 				"FROM PEBEMPL r, PERAPPT\r\n" + 
@@ -187,7 +186,7 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR AGREGADO 3'))  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
+				" into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
 				" WHEN ((SELECT DISTINCT\r\n" + 
 				"(select max(ptrtenr_desc)  from PTRTENR where ptrtenr_code= PERAPPT_TENURE_CODE ) as CATEGORIA_ESCALAFON\r\n" + 
 				"FROM PEBEMPL r, PERAPPT\r\n" + 
@@ -203,7 +202,7 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR AGREGADO 1'))  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
+				" into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
 				" WHEN ((SELECT DISTINCT\r\n" + 
 				"(select max(ptrtenr_desc)  from PTRTENR where ptrtenr_code= PERAPPT_TENURE_CODE ) as CATEGORIA_ESCALAFON\r\n" + 
 				"FROM PEBEMPL r, PERAPPT\r\n" + 
@@ -219,8 +218,8 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR AGREGADO 2') )  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
-				" select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM from MOVILIDAD.uzmtverireq";
+				" into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM) VALUES (3,1,"+ id +")\r\n" + 
+				" select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM from uzmtverireq";
 	System.out.println(q);
 		return (List<ReqplanmVo>) jdbcTemplate.query(q, new BeanPropertyRowMapper<>(ReqplanmVo.class));
 	}
@@ -242,7 +241,7 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR AUXILIAR 1'))  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
+				" into uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
 				" WHEN ((SELECT DISTINCT\r\n" + 
 				"(select max(ptrtenr_desc)  from PTRTENR where ptrtenr_code= PERAPPT_TENURE_CODE ) as CATEGORIA_ESCALAFON\r\n" + 
 				"FROM PEBEMPL r, PERAPPT\r\n" + 
@@ -258,7 +257,7 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR PRINCIPAL 1'))  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
+				" into uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
 				" WHEN ((SELECT DISTINCT\r\n" + 
 				"(select max(ptrtenr_desc)  from PTRTENR where ptrtenr_code= PERAPPT_TENURE_CODE ) as CATEGORIA_ESCALAFON\r\n" + 
 				"FROM PEBEMPL r, PERAPPT\r\n" + 
@@ -274,7 +273,7 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR AGREGADO 3'))  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
+				" into uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
 				" WHEN ((SELECT DISTINCT\r\n" + 
 				"(select max(ptrtenr_desc)  from PTRTENR where ptrtenr_code= PERAPPT_TENURE_CODE ) as CATEGORIA_ESCALAFON\r\n" + 
 				"FROM PEBEMPL r, PERAPPT\r\n" + 
@@ -290,7 +289,7 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR AGREGADO 1'))  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
+				" into uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
 				" WHEN ((SELECT DISTINCT\r\n" + 
 				"(select max(ptrtenr_desc)  from PTRTENR where ptrtenr_code= PERAPPT_TENURE_CODE ) as CATEGORIA_ESCALAFON\r\n" + 
 				"FROM PEBEMPL r, PERAPPT\r\n" + 
@@ -306,15 +305,15 @@ public class añosController {
 				"    or nbrjobs_pict_code = 'LD' )))\r\n" + 
 				"AND PERAPPT_APPT_EFF_DATE =     (select MAX(PERAPPT_APPT_EFF_DATE)  from PERAPPT WHERE PERAPPT_PIDM = "+ id +")\r\n" + 
 				") )  = (('TITULAR AGREGADO 2') )  THEN\r\n" + 
-				" into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
-				" select uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM from MOVILIDAD.uzmtverireq";
+				" into uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM) VALUES (11,1,"+ id +")\r\n" + 
+				" select uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM from uzmtverireq";
 	System.out.println(q);
 		return (List<ReqmovsubmVo>) jdbcTemplate.query(q, new BeanPropertyRowMapper<>(ReqmovsubmVo.class));
 	}
 	@GetMapping("/reqmov1/{id}")
 	public List<ReqmovsubmVo> requisitomov(@PathVariable Long id) throws SQLException{
-		String q = "insert into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
-				"select 11,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM, uzmtverireq_estado from MOVILIDAD.uzmtverireq where\r\n" + 
+		String q = "insert into uzmtverireq(uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
+				"select 11,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqmovsubm_id, PEAEMPL_PIDM, uzmtverireq_estado from uzmtverireq where\r\n" + 
 				"(uzmtverireq_estado= 1 and uzmtreqmovsubm_id= 1 and peaempl_pidm= "+ id +"))";
 	System.out.println(q);
 		return (List<ReqmovsubmVo>) jdbcTemplate.query(q, new BeanPropertyRowMapper<>(ReqmovsubmVo.class));
@@ -322,32 +321,32 @@ public class añosController {
 	
 	@GetMapping("/req1/{id}")
 	public List<ReqplanmVo> requisito1(@PathVariable Long id) throws SQLException{
-		String q = "insert into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
-				"select 7,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado from MOVILIDAD.uzmtverireq where\r\n" + 
+		String q = "insert into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
+				"select 7,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado from uzmtverireq where\r\n" + 
 				"(uzmtverireq_estado= 1 and uzmtreqplanm_id= 1 and peaempl_pidm= "+ id +"))";
 	System.out.println(q);
 		return (List<ReqplanmVo>) jdbcTemplate.query(q, new BeanPropertyRowMapper<>(ReqplanmVo.class));
 	}
 	@GetMapping("/req2/{id}")
 	public List<ReqplanmVo> requisito2(@PathVariable Long id) throws SQLException{
-		String q = "insert into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
-				"select 8,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado from MOVILIDAD.uzmtverireq where\r\n" + 
+		String q = "insert into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
+				"select 8,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado from uzmtverireq where\r\n" + 
 				"(uzmtverireq_estado= 1 and uzmtreqplanm_id= 2 and peaempl_pidm= "+ id +"))";
 	System.out.println(q);
 		return (List<ReqplanmVo>) jdbcTemplate.query(q, new BeanPropertyRowMapper<>(ReqplanmVo.class));
 	}
 	@GetMapping("/req3/{id}")
 	public List<ReqplanmVo> requisito3(@PathVariable Long id) throws SQLException{
-		String q = "insert into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
-				"select 9,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado from MOVILIDAD.uzmtverireq where\r\n" + 
+		String q = "insert into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
+				"select 9,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado from uzmtverireq where\r\n" + 
 				"(uzmtverireq_estado= 1 and uzmtreqplanm_id= 3 and peaempl_pidm= "+ id +"))";
 	System.out.println(q);
 		return (List<ReqplanmVo>) jdbcTemplate.query(q, new BeanPropertyRowMapper<>(ReqplanmVo.class));
 	}
 	@GetMapping("/req4/{id}")
 	public List<ReqplanmVo> requisito4(@PathVariable Long id) throws SQLException{
-		String q = "insert into MOVILIDAD.uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
-				"select 10,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado from MOVILIDAD.uzmtverireq where\r\n" + 
+		String q = "insert into uzmtverireq(uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado)\r\n" + 
+				"select 10,1,"+ id +",0 from dual where not exists (select uzmtverireq_id, uzmtreqplanm_id, PEAEMPL_PIDM, uzmtverireq_estado from uzmtverireq where\r\n" + 
 				"(uzmtverireq_estado= 1 and uzmtreqplanm_id= 4 and peaempl_pidm= "+ id +"))";
 	System.out.println(q);
 		return (List<ReqplanmVo>) jdbcTemplate.query(q, new BeanPropertyRowMapper<>(ReqplanmVo.class));
@@ -355,9 +354,9 @@ public class añosController {
 	
 	@GetMapping("/sm/{id}")
 	public List<ReqplanmVo> smovilidad(@PathVariable Long id) throws SQLException{
-		String q = "insert when (select sum(uzmtreqplanm_id) from MOVILIDAD.uzmtverireq where PEAEMPL_PIDM= "+ id +" and uzmtverireq_estado=1)=3 THEN\r\n" + 
-				"into MOVILIDAD.uzmtsolictmov(uzmtsolictmov_id,uzmtverireq_id,uzmtsolictmov_estado,uzmtsolictmov_obser) VALUES('2','1','1','Completado')\r\n" + 
-				"select uzmtsolictmov_id,uzmtverireq_id,uzmtsolictmov_estado,uzmtsolictmov_obser from MOVILIDAD.uzmtsolictmov\r\n" + 
+		String q = "insert when (select sum(uzmtreqplanm_id) from uzmtverireq where PEAEMPL_PIDM= "+ id +" and uzmtverireq_estado=1)=3 THEN\r\n" + 
+				"into uzmtsolictmov(uzmtsolictmov_id,uzmtverireq_id,uzmtsolictmov_estado,uzmtsolictmov_obser) VALUES('2','1','1','Completado')\r\n" + 
+				"select uzmtsolictmov_id,uzmtverireq_id,uzmtsolictmov_estado,uzmtsolictmov_obser from uzmtsolictmov\r\n" + 
 				"";
 	System.out.println(q);
 		return (List<ReqplanmVo>) jdbcTemplate.query(q, new BeanPropertyRowMapper<>(ReqplanmVo.class));
